@@ -64,11 +64,25 @@ h1 em { color:var(--paper); -webkit-text-stroke:2px var(--navy); text-shadow:4px
 .toggle-row input:checked+i { background:var(--purple); border-color:var(--purple); }.toggle-row input:checked+i:after { transform:translateX(18px); border-color:white; }
 .toggle-row input:focus-visible+i { outline:3px solid rgba(118,82,202,.2); outline-offset:2px; }
 
+.suggestion-wrap { border-top-color:var(--purple); }
+.suggestion-number { background:var(--purple); }
+.suggestion-panel { padding:30px; background:#faf9f5; border:1px solid var(--line); }
+.suggestion-panel>label { display:block; margin-bottom:10px; color:#555a6d; font-size:12px; font-weight:800; }
+.suggestion-panel textarea { width:100%; padding:14px; color:var(--navy); background:white; border:1px solid #bfc0c4; border-radius:0; outline:0; resize:vertical; line-height:1.6; }
+.suggestion-panel textarea:focus { border-color:var(--purple); outline:3px solid rgba(118,82,202,.16); }
+.local-hint { margin:8px 0 22px; color:var(--muted); font-size:11px; }
+.suggestion-empty { padding:30px 18px; color:#92939c; background:white; border-left:4px solid var(--purple); font-size:13px; }
+.suggestion-results { display:grid; gap:12px; }
+.suggestion-result { display:grid; grid-template-columns:150px minmax(0,1fr) auto; align-items:center; gap:16px; padding:15px 16px; background:white; border:1px solid var(--line); border-left:4px solid var(--purple); }
+.suggestion-result span,.suggestion-result small { display:block; }.suggestion-result span { font-size:13px; font-weight:900; }.suggestion-result small { margin-top:4px; color:var(--muted); font-size:10px; line-height:1.4; }
+.suggestion-result code { overflow-wrap:anywhere; color:var(--navy); font:700 13px/1.5 monospace; }
+.suggestion-result button { padding:9px 14px; color:white; background:var(--navy); border:0; font-size:11px; font-weight:800; }
+
 .privacy-note { max-width:1200px; margin:28px auto 0; padding:18px 24px; display:flex; align-items:center; gap:14px; background:rgba(255,254,250,.82); border-left:5px solid var(--green); }
 .privacy-note .lock { width:34px; height:34px; display:grid; place-items:center; flex:0 0 auto; color:white; background:var(--green); }
 .privacy-note strong { font-size:13px; }.privacy-note p { margin:4px 0 0; color:var(--muted); font-size:12px; }
 footer { max-width:1200px; margin:28px auto 0; padding:22px 24px 0; color:var(--muted); border-top:2px solid var(--navy); font:10px/1.5 monospace; letter-spacing:.08em; } footer span { padding:0 8px; }
 
-@media(max-width:760px){.site-header{padding:20px 18px 0}.brand span:last-child{display:none}.privacy-pill{font-size:8px}.hero{padding:42px 18px 32px}.hero-grid{grid-template-columns:1fr;gap:30px}.lede{font-size:14px}.checker-wrap{margin:28px 14px 0;padding:0 14px 22px}.tool-heading{padding:26px 6px 22px}.tool-heading h2{font-size:25px}.section-number{width:46px;height:46px}.checker{grid-template-columns:1fr}.input-panel{border-right:0;border-bottom:1px solid var(--line)}.input-panel,.settings-panel{padding:24px 20px}.privacy-note{margin:20px 14px 0}.check-list{grid-template-columns:1fr}footer{margin:22px 14px 0}}
+@media(max-width:760px){.site-header{padding:20px 18px 0}.brand span:last-child{display:none}.privacy-pill{font-size:8px}.hero{padding:42px 18px 32px}.hero-grid{grid-template-columns:1fr;gap:30px}.lede{font-size:14px}.checker-wrap{margin:28px 14px 0;padding:0 14px 22px}.tool-heading{padding:26px 6px 22px}.tool-heading h2{font-size:25px}.section-number{width:46px;height:46px}.checker{grid-template-columns:1fr}.input-panel{border-right:0;border-bottom:1px solid var(--line)}.input-panel,.settings-panel,.suggestion-panel{padding:24px 20px}.suggestion-result{grid-template-columns:1fr auto}.suggestion-result code{grid-column:1/-1;grid-row:2}.privacy-note{margin:20px 14px 0}.check-list{grid-template-columns:1fr}footer{margin:22px 14px 0}}
 @media(max-width:420px){h1{font-size:54px}.tool-heading p{font-size:12px}.privacy-pill{font-size:0}.privacy-pill span{width:9px;height:9px}}
 @media(prefers-reduced-motion:reduce){*{scroll-behavior:auto!important;transition:none!important}}

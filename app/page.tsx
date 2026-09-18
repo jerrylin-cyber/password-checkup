@@ -1,15 +1,18 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { getSuggestions, type PasswordRules } from "./password-utils";
 
 const COMMON_PASSWORDS = new Set(["123456", "12345678", "123456789", "password", "qwerty", "abc123", "111111", "000000", "admin", "letmein", "welcome", "iloveyou", "password1", "qwerty123", "1q2w3e4r", "sunshine", "dragon", "monkey"]);
-type Rules = { minLength: number; uppercase: boolean; lowercase: boolean; number: boolean; special: boolean; common: boolean };
+type Rules = PasswordRules;
 const DEFAULT_RULES: Rules = { minLength: 8, uppercase: true, lowercase: true, number: true, special: true, common: true };
 
 export default function Home() {
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [rules, setRules] = useState(DEFAULT_RULES);
+  const [seedText, setSeedText] = useState("");
+  const [copied, setCopied] = useState("");
   const checks = useMemo(() => [
     { key: "length", label: `至少 ${rules.minLength} 個字元`, active: true, pass: password.length >= rules.minLength },
     { key: "uppercase", label: "包含大寫英文字母", active: rules.uppercase, pass: /[A-Z]/.test(password) },
@@ -23,6 +26,12 @@ export default function Home() {
   const complete = password.length > 0 && passed === activeChecks.length;
   const score = password.length ? Math.round((passed / activeChecks.length) * 100) : 0;
   const toggleRule = (key: keyof Omit<Rules, "minLength">) => setRules((current) => ({ ...current, [key]: !current[key] }));
+  const suggestions = useMemo(() => seedText ? getSuggestions(seedText, rules) : null, [seedText, rules]);
+  async function copySuggestion(label: string, value: string) {
+    await navigator.clipboard.writeText(value);
+    setCopied(label);
+    window.setTimeout(() => setCopied(""), 1400);
+  }
 
   return (
     <main>
@@ -43,6 +52,23 @@ export default function Home() {
           <div className="length-setting"><label htmlFor="length">最少字元數 <strong>{rules.minLength}</strong></label><input id="length" type="range" min="6" max="20" value={rules.minLength} onChange={(event) => setRules((current) => ({ ...current, minLength: Number(event.target.value) }))} /><div><span>6</span><span>20</span></div></div>
           <div className="toggles">{([ ["uppercase", "大寫英文", "至少一個 A–Z"], ["lowercase", "小寫英文", "至少一個 a–z"], ["number", "數字", "至少一個 0–9"], ["special", "特殊符號", "例如 ! @ # $ %"], ["common", "常見密碼檢查", "排除高風險密碼"] ] as const).map(([key, title, hint]) => <label className="toggle-row" key={key}><span><strong>{title}</strong><small>{hint}</small></span><input type="checkbox" checked={rules[key]} onChange={() => toggleRule(key)} /><i aria-hidden="true" /></label>)}</div>
         </aside>
+        </div>
+      </section>
+      <section className="checker-wrap suggestion-wrap">
+        <div className="tool-heading"><span className="section-number suggestion-number">02</span><div><h2>密碼建議</h2><p>以輸入文字產生可重現、符合「01 檢查設定」的密碼</p></div></div>
+        <div className="suggestion-panel">
+          <label htmlFor="seed-text">輸入一段容易記住的文字</label>
+          <textarea id="seed-text" value={seedText} onChange={(event) => setSeedText(event.target.value)} placeholder="例如：每週五下班吃火鍋" rows={3} spellCheck={false} />
+          <p className="local-hint">文字只在這個頁面處理，不會傳送或保存。</p>
+          {suggestions ? <div className="suggestion-results" aria-live="polite">
+            {([
+              ["鍵盤轉換", suggestions.keyboard, "中文轉注音按鍵；英文重排；其他字元固定對應"],
+              ["MD5 大寫", suggestions.md5Upper, "輸入內容的 MD5，全大寫"],
+              ["MD5 小寫", suggestions.md5Lower, "輸入內容的 MD5，全小寫"],
+              ["固定規則", suggestions.fixed, "以 MD5 為來源，符合目前 01 設定"],
+              ["Seed 隨機", suggestions.seeded, "以輸入內容為 seed，符合目前 01 設定"],
+            ] as const).map(([label, value, description]) => <article className="suggestion-result" key={label}><div><span>{label}</span><small>{description}</small></div><code>{value}</code><button type="button" onClick={() => copySuggestion(label, value)}>{copied === label ? "已複製" : "複製"}</button></article>)}
+          </div> : <div className="suggestion-empty">輸入文字後，建議結果會顯示在這裡。</div>}
         </div>
       </section>
       <section className="privacy-note"><span className="lock">⌁</span><div><strong>你的密碼不會離開這個頁面</strong><p>沒有伺服器傳輸、沒有資料庫、沒有追蹤碼。關閉分頁後，輸入內容即消失。</p></div></section>
