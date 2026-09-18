@@ -26,8 +26,8 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header"><a className="brand" href="#top" aria-label="密碼健檢首頁"><span className="brand-mark">P</span><span>密碼健檢</span></a><div className="privacy-pill"><span />完全在本機檢查</div></header>
-      <section className="hero" id="top"><p className="eyebrow">PASSWORD CHECKUP</p><h1>你的密碼，<br /><em>真的夠安全嗎？</em></h1><p className="lede">輸入密碼，立即檢查強度與安全條件。<br />所有運算都在你的瀏覽器中完成，不會傳送或保存。</p></section>
+      <header className="site-header"><a className="brand" href="#top" aria-label="密碼健檢首頁"><span className="brand-mark">P</span><span>密碼健檢</span></a><div className="privacy-pill"><span />本機檢查 · 不保存資料</div></header>
+      <section className="hero" id="top"><p className="eyebrow">PASSWORD SECURITY</p><h1>檢查你的密碼是否安全</h1><p className="lede">依照自訂規則即時檢查密碼。所有運算僅在此瀏覽器完成，內容不會傳送或保存。</p></section>
       <section className="checker" aria-label="密碼檢查器">
         <div className="input-panel">
           <label htmlFor="password">輸入要檢查的密碼</label>
