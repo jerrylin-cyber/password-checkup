@@ -26,9 +26,11 @@ export default function Home() {
 
   return (
     <main>
-      <header className="site-header"><a className="brand" href="#top" aria-label="密碼健檢首頁"><span className="brand-mark">P</span><span>密碼健檢</span></a><div className="privacy-pill"><span />本機檢查 · 不保存資料</div></header>
-      <section className="hero" id="top"><p className="eyebrow">PASSWORD SECURITY</p><h1>檢查你的密碼是否安全</h1><p className="lede">依照自訂規則即時檢查密碼。所有運算僅在此瀏覽器完成，內容不會傳送或保存。</p></section>
-      <section className="checker" aria-label="密碼檢查器">
+      <header className="site-header"><a className="brand" href="#top" aria-label="密碼健檢首頁"><span className="brand-mark">P</span><span>PASSWORD DEV TOOL</span></a><div className="privacy-pill"><span />LOCAL ONLY · NO STORAGE</div></header>
+      <section className="hero" id="top"><p className="eyebrow">PASSWORD DEV TOOL</p><div className="hero-grid"><h1><span>密碼安全</span><em>檢查器</em></h1><p className="lede">長度、字元規則與常見密碼，一頁完成即時檢查。所有運算只在瀏覽器中執行。</p></div></section>
+      <section className="checker-wrap">
+        <div className="tool-heading"><span className="section-number">01</span><div><h2>密碼強度檢查</h2><p>依照右側規則，即時判斷密碼是否符合條件</p></div></div>
+        <div className="checker" aria-label="密碼檢查器">
         <div className="input-panel">
           <label htmlFor="password">輸入要檢查的密碼</label>
           <div className="password-field"><input id="password" type={visible ? "text" : "password"} value={password} onChange={(event) => setPassword(event.target.value)} placeholder="在這裡輸入密碼" autoComplete="off" spellCheck={false} /><button type="button" onClick={() => setVisible((value) => !value)} aria-label={visible ? "隱藏密碼" : "顯示密碼"}>{visible ? "隱藏" : "顯示"}</button></div>
@@ -41,6 +43,7 @@ export default function Home() {
           <div className="length-setting"><label htmlFor="length">最少字元數 <strong>{rules.minLength}</strong></label><input id="length" type="range" min="6" max="20" value={rules.minLength} onChange={(event) => setRules((current) => ({ ...current, minLength: Number(event.target.value) }))} /><div><span>6</span><span>20</span></div></div>
           <div className="toggles">{([ ["uppercase", "大寫英文", "至少一個 A–Z"], ["lowercase", "小寫英文", "至少一個 a–z"], ["number", "數字", "至少一個 0–9"], ["special", "特殊符號", "例如 ! @ # $ %"], ["common", "常見密碼檢查", "排除高風險密碼"] ] as const).map(([key, title, hint]) => <label className="toggle-row" key={key}><span><strong>{title}</strong><small>{hint}</small></span><input type="checkbox" checked={rules[key]} onChange={() => toggleRule(key)} /><i aria-hidden="true" /></label>)}</div>
         </aside>
+        </div>
       </section>
       <section className="privacy-note"><span className="lock">⌁</span><div><strong>你的密碼不會離開這個頁面</strong><p>沒有伺服器傳輸、沒有資料庫、沒有追蹤碼。關閉分頁後，輸入內容即消失。</p></div></section>
       <footer>密碼健檢 <span>·</span> 本機即時檢查 <span>·</span> 不保存任何資料</footer>
